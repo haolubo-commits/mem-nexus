@@ -126,8 +126,9 @@ curl http://localhost:8000/api/v1/health
 
 - [x] **Day 1: Scaffolding & Architecture**
   - Architecture specifications, entity-relation schemas, Pydantic v2 models, MongoDB indexes, FastAPI gateway.
-- [ ] **Day 2: Core Memory Engine & Graph APIs**
+- [x] **Day 2: Core Memory Engine & Graph APIs**
   - Semantic triple extraction, Ebbinghaus temporal decay calculator, multi-hop MongoDB `$graphLookup` traversal, recall synthesis APIs.
+  - Complete endpoint reference documented in [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md).
 - [ ] **Day 3: Interactive React Knowledge Graph & Recall Cockpit UI**
   - Modern glassmorphic React UI, interactive SVG force-directed knowledge graph, memory timeline, live recall simulator.
 - [ ] **Day 4: Multi-Hop Traversal Benchmarks, Pytest Suites & Docker Compose**
