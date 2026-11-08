@@ -9,7 +9,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.db.mongodb import db_manager
-from app.routers import health_router
+from app.routers import (
+    health_router,
+    episodes_router,
+    entities_router,
+    relations_router,
+    graph_router,
+    recall_router,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,8 +54,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register routers
+# Register routers under /api/v1
 app.include_router(health_router, prefix=settings.API_V1_PREFIX)
+app.include_router(episodes_router, prefix=settings.API_V1_PREFIX)
+app.include_router(entities_router, prefix=settings.API_V1_PREFIX)
+app.include_router(relations_router, prefix=settings.API_V1_PREFIX)
+app.include_router(graph_router, prefix=settings.API_V1_PREFIX)
+app.include_router(recall_router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/", tags=["Root"])
