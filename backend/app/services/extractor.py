@@ -67,7 +67,7 @@ class TripletExtractor:
         ),
         # Author / Creator: "Guido created Python", "Alice authored the spec"
         (
-            re.compile(r"(?i)\b([a-zA-Z0-9_\-\.]+)\s+(created|authored|designed|built|developed|leads?)\s+([a-zA-Z0-9_\-\.\s]+?)(?:\s+using|\.|$)", re.IGNORECASE),
+            re.compile(r"(?i)\b((?:(?:Dr\.|Mr\.|Ms\.|Prof\.)\s+)?[a-zA-Z0-9_\-\.]+)\s+(created|authored|designed|built|developed|leads?)\s+([a-zA-Z0-9_\-\.\s]+?)(?:\s+using|\.|$)", re.IGNORECASE),
             "authored",
             EntityType.PERSON,
             EntityType.TASK,
@@ -91,7 +91,7 @@ class TripletExtractor:
         ),
         # Attribute / Configuration: "Postgres version is 16", "Timeout is set to 30s"
         (
-            re.compile(r"(?i)\b([a-zA-Z0-9_\-\.]+)\s+(?:version\s+|timeout\s+|setting\s+)?(is|is\s+configured\s+as|equals|has\s+attribute)\s+([a-zA-Z0-9_\-\.\s]+?)(?:\.|$)", re.IGNORECASE),
+            re.compile(r"(?i)\b([a-zA-Z0-9_\-\.]+)\s+(?:version\s+|timeout\s+|setting\s+)?(is\s+configured\s+as|equals|has\s+attribute|is(?!\s+(?:located|based|hosted|deployed|employed|a\s+part)))\s+([a-zA-Z0-9_\-\.\s]+?)(?:\.|$)", re.IGNORECASE),
             "has_attribute",
             EntityType.TOOL,
             EntityType.ATTRIBUTE,
@@ -148,8 +148,8 @@ class TripletExtractor:
         if not text:
             return triplets
 
-        # Split into sentences
-        sentences = re.split(r"(?<=[.!?\n])\s+", text)
+        # Split into sentences while avoiding splitting on common abbreviations like Dr., Mr., Ms.
+        sentences = re.split(r"(?<!\bDr)(?<!\bMr)(?<!\bMs)(?<!\bProf)[.!?\n]+\s+", text)
         for sentence in sentences:
             sentence = sentence.strip()
             if not sentence:
@@ -187,3 +187,4 @@ class TripletExtractor:
                         triplets.append(triplet)
 
         return triplets
+
