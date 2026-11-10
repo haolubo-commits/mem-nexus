@@ -217,3 +217,4 @@ async def update_entity(entity_id: str, payload: EntityUpdate):
         created_at=updated.get("created_at", datetime.now(timezone.utc)),
         attributes=updated.get("attributes", {}),
     )
+

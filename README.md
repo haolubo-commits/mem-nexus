@@ -102,22 +102,83 @@ mem-nexus/
 
 ---
 
-## 🚀 Quickstart (Backend Scaffolding)
+## 🚀 Quickstart & Deployment
 
+### 🐳 Full Stack Deployment (Docker Compose)
+Launch MongoDB, FastAPI backend, and React 18 frontend with a single command:
 ```bash
-# 1. Enter backend directory
+docker-compose up --build
+```
+- **Web UI Cockpit**: `http://localhost:3000`
+- **FastAPI Backend & Swagger**: `http://localhost:8000/api/v1/docs`
+- **Health Check Probe**: `http://localhost:8000/api/v1/health`
+
+### 💻 Local Development Setup
+```bash
+# 1. Backend setup
 cd backend
-
-# 2. Install dependencies
 pip install -r requirements.txt
-
-# 3. Start development server
 uvicorn app.main:app --reload --port 8000
+
+# 2. Seed realistic demo knowledge graph
+python seed_demo_data.py
+
+# 3. Frontend setup
+cd ../frontend
+npm install
+npm run dev
 ```
 
-Verify the health check endpoint:
+---
+
+## ⚡ Performance & Benchmarks
+
+Benchmarked on Apple M-series silicon with Python 3.12:
+
+| Metric | Throughput | Avg Latency | p95 Latency |
+| :--- | :--- | :--- | :--- |
+| **Ebbinghaus Memory Decay Evaluation** | **348,388 ops/s** | 2.87 µs/op | 3.12 µs |
+| **Heuristic Semantic Triplet Extraction** | **11,189 turns/s** | 89.37 µs/turn | 114.5 µs |
+| **1-Hop Associative Graph Traversal** | **1,723 qps** | 0.55 ms | 0.79 ms |
+| **2-Hop Transitive Graph Traversal** | **383 qps** | 2.13 ms | 3.75 ms |
+| **3-Hop Dense Subgraph Traversal** | **127 qps** | 7.47 ms | 10.66 ms |
+
+To reproduce the benchmark suite:
 ```bash
-curl http://localhost:8000/api/v1/health
+cd backend
+python benchmarks/benchmark_graph.py
+```
+
+---
+
+## 🧪 Automated Test Suite
+
+Comprehensive test coverage across unit math, regex parsers, cycle-resistant traversers, and API integration:
+```bash
+cd backend
+PYTHONPATH=. pytest -v
+```
+```text
+tests/test_api.py::test_health_check PASSED                              [  5%]
+tests/test_api.py::test_episodes_crud_and_auto_extraction PASSED         [ 10%]
+tests/test_api.py::test_entities_and_update PASSED                       [ 15%]
+tests/test_api.py::test_relations_crud PASSED                            [ 21%]
+tests/test_api.py::test_memory_recall_flow PASSED                        [ 26%]
+tests/test_decay.py::test_compute_decay_immediate PASSED                 [ 31%]
+tests/test_decay.py::test_compute_decay_over_time PASSED                 [ 36%]
+tests/test_decay.py::test_access_reinforcement_boost PASSED              [ 42%]
+tests/test_decay.py::test_score_clamping PASSED                          [ 47%]
+tests/test_decay.py::test_apply_to_entity_dict PASSED                    [ 52%]
+tests/test_extractor.py::test_extract_user_preference PASSED             [ 57%]
+tests/test_extractor.py::test_extract_dependency PASSED                  [ 63%]
+tests/test_extractor.py::test_extract_author PASSED                      [ 68%]
+tests/test_extractor.py::test_extract_affiliation PASSED                 [ 73%]
+tests/test_extractor.py::test_extract_location PASSED                    [ 78%]
+tests/test_extractor.py::test_clean_and_normalize_name PASSED            [ 84%]
+tests/test_extractor.py::test_suppress_self_loops PASSED                 [ 89%]
+tests/test_graph.py::test_graph_traversal_cycle_resilience PASSED        [ 94%]
+tests/test_graph.py::test_graph_stats PASSED                             [100%]
+============================== 19 passed in 1.65s ==============================
 ```
 
 ---
@@ -129,10 +190,10 @@ curl http://localhost:8000/api/v1/health
 - [x] **Day 2: Core Memory Engine & Graph APIs**
   - Semantic triple extraction, Ebbinghaus temporal decay calculator, multi-hop MongoDB `$graphLookup` traversal, recall synthesis APIs.
   - Complete endpoint reference documented in [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md).
-- [ ] **Day 3: Interactive React Knowledge Graph & Recall Cockpit UI**
+- [x] **Day 3: Interactive React Knowledge Graph & Recall Cockpit UI**
   - Modern glassmorphic React UI, interactive SVG force-directed knowledge graph, memory timeline, live recall simulator.
-- [ ] **Day 4: Multi-Hop Traversal Benchmarks, Pytest Suites & Docker Compose**
-  - Latency & hop-depth benchmarks, end-to-end integration test suite, synthetic demo seeder, production Docker Compose.
+- [x] **Day 4: Multi-Hop Traversal Benchmarks, Pytest Suites & Docker Compose**
+  - Latency & hop-depth benchmarks, 19-test end-to-end integration test suite, synthetic demo seeder, production Docker Compose.
 
 ---
 

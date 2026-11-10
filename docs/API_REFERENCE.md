@@ -167,3 +167,4 @@ $$R(t) = I_0 \cdot \exp\left(-\lambda \cdot \frac{\Delta t_{\text{hours}}}{24}\r
 - $\Delta t$: Elapsed time since last recall.
 - $\beta$: Reinforcement boost multiplier (default `0.15`).
 - $N_{\text{access}}$: Total recall frequency. Repeated associative references dynamically revive memories before they decay.
+

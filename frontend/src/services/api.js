@@ -86,3 +86,4 @@ export async function updateEntity(entityId, updates) {
   if (!res.ok) throw new Error('Failed to update entity');
   return res.json();
 }
+

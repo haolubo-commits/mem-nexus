@@ -146,3 +146,4 @@ class RecallConsolidator:
             subgraph=subgraph if req.include_subgraph else None,
             execution_time_ms=elapsed_ms,
         )
+

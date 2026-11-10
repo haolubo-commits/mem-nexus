@@ -44,3 +44,4 @@ async def get_graph_stats(
     graph density, and entity counts.
     """
     return await GraphTraverser.get_graph_stats(session_id)
+

@@ -157,3 +157,4 @@ export default function EntityDetailDrawer({ entity, sessionId, onClose, onUpdat
     </div>
   );
 }
+

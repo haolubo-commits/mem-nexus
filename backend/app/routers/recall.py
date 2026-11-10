@@ -21,3 +21,4 @@ async def recall_memories(payload: MemoryRecallRequest):
     and returns a structured, prompt-ready memory context block.
     """
     return await RecallConsolidator.recall(payload)
+

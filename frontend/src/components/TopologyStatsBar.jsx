@@ -78,3 +78,4 @@ export default function TopologyStatsBar({ stats, entitiesCount, relationsCount 
     </div>
   );
 }
+

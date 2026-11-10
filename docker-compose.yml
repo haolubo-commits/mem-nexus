@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: memnexus-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: mem_nexus_db
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - memnexus-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: memnexus-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - DATABASE_NAME=mem_nexus_db
+      - DEFAULT_DECAY_RATE=0.05
+      - DEFAULT_MAX_HOPS=3
+      - MIN_CONFIDENCE_THRESHOLD=0.6
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - memnexus-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: memnexus-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - memnexus-net
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  memnexus-net:
+    driver: bridge

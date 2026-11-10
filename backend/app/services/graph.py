@@ -193,3 +193,4 @@ class GraphTraverser:
             "top_connected_hubs": top_hubs,
             "graph_density": density,
         }
+
